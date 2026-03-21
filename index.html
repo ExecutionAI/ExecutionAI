@@ -509,6 +509,12 @@
     .ico { display: inline-block; flex-shrink: 0; }
 
     /* ─── Responsive ──────────────────────────────── */
+
+    /* Tablet: stack studio layout, keep cards 2-col */
+    @media (max-width: 1080px) {
+      .studio-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
     @media (max-width: 768px) {
       header { padding: 0 1.25rem; }
       .nav-links { display: none; }
@@ -516,11 +522,14 @@
       .hero { padding: 110px 1.25rem 70px; }
       .cap-grid,
       .proj-grid  { grid-template-columns: 1fr; }
-      .studio-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-      .studio-stats-grid { grid-template-columns: 1fr; }
       .hero-stats { flex-direction: column; gap: 1.5rem; }
       .vr { display: none; }
       footer { flex-direction: column; gap: .75rem; text-align: center; }
+    }
+
+    /* Mobile: cards single column */
+    @media (max-width: 640px) {
+      .studio-stats-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
