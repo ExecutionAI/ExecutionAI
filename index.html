@@ -179,7 +179,6 @@
 
     /* ─── Hero ────────────────────────────────────── */
     .hero {
-      position: relative;
       min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
       text-align: center;
@@ -551,10 +550,6 @@
 
   <!-- ── HERO ──────────────────────────────────────── -->
   <section class="hero" aria-labelledby="hero-heading">
-    <!-- Animated background paths -->
-    <div aria-hidden="true" style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;">
-      <svg id="hero-paths-svg" width="100%" height="100%" viewBox="0 0 696 316" preserveAspectRatio="xMidYMid slice" fill="none"></svg>
-    </div>
     <div class="hero-glow" aria-hidden="true"></div>
     <div style="position:relative;z-index:1;">
 
@@ -817,52 +812,5 @@
     <p>© 2026 ExecutionAI · AI Lab Studios · México</p>
   </footer>
 
-<script type="module">
-import { animate } from "https://esm.sh/framer-motion@11";
-
-const svg = document.getElementById('hero-paths-svg');
-if (svg) {
-  function buildPaths(position) {
-    for (let i = 0; i < 36; i++) {
-      const px = 380 - i * 5 * position;
-      const py = 189 + i * 6;
-      const mx = 312 - i * 5 * position;
-      const cx = 152 - i * 5 * position;
-      const cy = 343 - i * 6;
-      const ex = 616 - i * 5 * position;
-      const ey = 470 - i * 6;
-      const fx = 684 - i * 5 * position;
-      const fy = 875 - i * 6;
-      const d = `M-${px} -${py}C-${px} -${py} -${mx} ${216 - i*6} ${cx} ${cy}C${ex} ${ey} ${fx} ${fy} ${fx} ${fy}`;
-
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('d', d);
-      path.setAttribute('stroke', 'rgba(0,217,255,1)');
-      path.setAttribute('stroke-width', 0.5 + i * 0.03);
-      path.setAttribute('fill', 'none');
-      svg.appendChild(path);
-
-      const duration = 20 + Math.random() * 10;
-      animate(
-        path,
-        {
-          pathLength: [0.3, 1, 0.3],
-          pathOffset: [0, 1, 0],
-          opacity: [0.1 + i * 0.015, Math.min(0.2 + i * 0.015, 0.4), 0.1 + i * 0.015],
-        },
-        {
-          duration,
-          repeat: Infinity,
-          ease: 'linear',
-          delay: -Math.random() * duration,
-        }
-      );
-    }
-  }
-
-  buildPaths(1);
-  buildPaths(-1);
-}
-</script>
 </body>
 </html>
