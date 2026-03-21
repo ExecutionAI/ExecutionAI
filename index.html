@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ExecutionAI — Automatización e IA para tu empresa</title>
+  <title>ExecutionAI — AI Lab Studios</title>
+  <meta name="description" content="ExecutionAI es un AI Lab Studios. Construimos agentes de IA, automatizaciones y sistemas de ejecución para empresas que necesitan resultados reales.">
+  <meta property="og:title" content="ExecutionAI — AI Lab Studios">
+  <meta property="og:description" content="Construimos sistemas de IA que ejecutan trabajo real. Agentes, automatizaciones y productos con IA nativa.">
+  <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -57,11 +61,74 @@
       0%,100% { opacity: .45; }
       50%      { opacity: .75; }
     }
-    .au    { animation: fadeUp .75s cubic-bezier(.16,1,.3,1) both; }
-    .d1    { animation-delay: .10s; }
-    .d2    { animation-delay: .22s; }
-    .d3    { animation-delay: .36s; }
-    .d4    { animation-delay: .52s; }
+    @keyframes status-blink {
+      0%,100% { opacity: 1; }
+      50%      { opacity: .35; }
+    }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .au  { animation: fadeUp .75s cubic-bezier(.16,1,.3,1) both; }
+    .d1  { animation-delay: .10s; }
+    .d2  { animation-delay: .22s; }
+    .d3  { animation-delay: .36s; }
+    .d4  { animation-delay: .52s; }
+    .d5  { animation-delay: .68s; }
+
+    /* ─── Hero mark (logo SVG) ────────────────────── */
+    .hero-mark {
+      display: flex; justify-content: center; align-items: center;
+      margin-bottom: 2.25rem;
+    }
+    .hero-mark-orbit {
+      animation: spin-slow 28s linear infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    /* ─── HUD frame around wordmark ───────────────── */
+    .hero-hud {
+      position: relative; display: inline-block;
+      padding: 1.25rem 3rem;
+      margin-bottom: .25rem;
+    }
+    .hero-hud::before, .hero-hud::after,
+    .hero-hud-tr::before, .hero-hud-tr::after {
+      content: ''; position: absolute;
+      width: 16px; height: 16px;
+      border-color: rgba(0,217,255,.4); border-style: solid;
+    }
+    .hero-hud::before  { top:0; left:0;  border-width: 1.5px 0 0 1.5px; }
+    .hero-hud::after   { bottom:0; left:0; border-width: 0 0 1.5px 1.5px; }
+    .hero-hud-tr::before { top:0; right:0; border-width: 1.5px 1.5px 0 0; }
+    .hero-hud-tr::after  { bottom:0; right:0; border-width: 0 1.5px 1.5px 0; }
+
+    /* ─── AI LAB STUDIOS wordmark ─────────────────── */
+    .hero-studio-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 4.2vw, 4.2rem);
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: var(--txt);
+      margin: 0;
+    }
+    .hero-studio-title .ai { color: var(--accent); }
+
+    /* ─── Hero tagline ────────────────────────────── */
+    .hero-tagline {
+      font-family: var(--ff-display);
+      font-size: clamp(.95rem, 1.6vw, 1.25rem);
+      font-weight: 600;
+      color: var(--txt-2);
+      line-height: 1.65;
+      letter-spacing: .02em;
+      margin: 1.75rem auto 2.75rem;
+      max-width: 520px;
+    }
+    .hero-tagline strong { color: var(--txt); font-weight: 700; }
 
     /* ─── Layout ──────────────────────────────────── */
     .wrap  { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
@@ -69,7 +136,7 @@
     .divider { border: none; border-top: 1px solid var(--border-sub); }
 
     /* ─── Nav ─────────────────────────────────────── */
-    nav {
+    header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       height: 62px; padding: 0 2rem;
       display: flex; align-items: center; justify-content: space-between;
@@ -78,13 +145,26 @@
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border-sub);
     }
+    .nav-left { display: flex; align-items: center; gap: 2.5rem; }
     .logo {
       font-family: var(--ff-display);
       font-size: 1.05rem; font-weight: 700;
       letter-spacing: .06em; text-transform: uppercase;
       color: var(--txt); text-decoration: none;
+      flex-shrink: 0;
     }
     .logo em { color: var(--accent); font-style: normal; }
+    .nav-links {
+      display: flex; align-items: center; gap: 1.75rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .82rem; font-weight: 500;
+      color: var(--txt-2); text-decoration: none;
+      letter-spacing: .03em;
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--txt); }
     .nav-btn {
       display: inline-flex; align-items: center; gap: .45rem;
       padding: .5rem 1.25rem;
@@ -92,6 +172,7 @@
       font-family: var(--ff-body); font-size: .85rem; font-weight: 600;
       border-radius: 6px; text-decoration: none;
       transition: opacity .15s, transform .15s;
+      flex-shrink: 0;
     }
     .nav-btn:hover  { opacity: .88; transform: translateY(-1px); }
     .nav-btn:active { transform: translateY(0); }
@@ -105,10 +186,10 @@
       overflow: hidden;
     }
     .hero-glow {
-      position: absolute; top: 18%; left: 50%;
+      position: absolute; top: 10%; left: 50%;
       transform: translateX(-50%);
-      width: 640px; height: 420px;
-      background: radial-gradient(ellipse, rgba(0,217,255,.07) 0%, transparent 68%);
+      width: 900px; height: 560px;
+      background: radial-gradient(ellipse, rgba(0,217,255,.09) 0%, rgba(0,217,255,.03) 40%, transparent 70%);
       pointer-events: none;
       animation: glow-pulse 5s ease-in-out infinite;
     }
@@ -124,16 +205,16 @@
     .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
     h1 {
       font-family: var(--ff-display);
-      font-size: clamp(2.8rem, 8vw, 5.5rem);
-      font-weight: 800; line-height: 1.03; letter-spacing: -.03em;
+      font-size: clamp(2.6rem, 7.5vw, 5.2rem);
+      font-weight: 800; line-height: 1.05; letter-spacing: -.03em;
       color: var(--txt); margin-bottom: 1.5rem;
-      max-width: 860px; margin-left: auto; margin-right: auto;
+      max-width: 820px; margin-left: auto; margin-right: auto;
     }
     h1 .hi { color: var(--accent); }
     .hero-sub {
-      font-size: clamp(.97rem, 1.8vw, 1.15rem);
-      color: var(--txt-2); max-width: 540px; margin: 0 auto 2.5rem;
-      line-height: 1.7;
+      font-size: clamp(.95rem, 1.8vw, 1.1rem);
+      color: var(--txt-2); max-width: 500px; margin: 0 auto 2.5rem;
+      line-height: 1.75;
     }
     .btn-primary {
       display: inline-flex; align-items: center; gap: .55rem;
@@ -191,137 +272,181 @@
       max-width: 500px; line-height: 1.68;
     }
 
-    /* ─── Pain points ─────────────────────────────── */
-    .pain-grid {
-      display: grid; grid-template-columns: repeat(3,1fr);
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: 12px;
-      overflow: visible; margin-top: 3.25rem;
-    }
-    .pain-card {
-      background: var(--surface); padding: 2.25rem;
-      transition: background .2s; overflow: visible;
-    }
-    .pain-card:first-child { border-radius: 12px 0 0 12px; }
-    .pain-card:last-child  { border-radius: 0 12px 12px 0; }
-    .pain-card:hover { background: var(--surface-2); }
-    .pain-ico {
-      width: 40px; height: 40px; border-radius: 8px;
-      background: var(--accent-dim);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--accent); margin-bottom: 1.25rem;
-    }
-    .pain-q {
-      font-family: var(--ff-display);
-      font-size: 1.03rem; font-weight: 600;
-      color: var(--txt); margin-bottom: .7rem; line-height: 1.45;
-      overflow: visible;
-    }
-    .pain-d { font-size: .875rem; color: var(--txt-2); line-height: 1.65; overflow: visible; }
-
-    /* ─── Services ────────────────────────────────── */
-    .svc-grid {
+    /* ─── Capabilities ────────────────────────────── */
+    .cap-grid {
       display: grid; grid-template-columns: repeat(2,1fr);
       gap: 1.375rem; margin-top: 3.25rem;
     }
-    .svc-card {
+    .cap-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px; padding: 2rem;
       position: relative; overflow: hidden;
       transition: border-color .2s, transform .2s;
     }
-    .svc-card::before {
+    .cap-card::before {
       content: ''; position: absolute;
       top: 0; left: 0; right: 0; height: 1px;
       background: linear-gradient(90deg, transparent, var(--accent), transparent);
       opacity: 0; transition: opacity .3s;
     }
-    .svc-card:hover { border-color: rgba(0,217,255,.22); transform: translateY(-2px); }
-    .svc-card:hover::before { opacity: 1; }
-    .svc-n {
+    .cap-card:hover { border-color: rgba(0,217,255,.22); transform: translateY(-2px); }
+    .cap-card:hover::before { opacity: 1; }
+    .cap-ico {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: var(--accent-dim);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); margin-bottom: 1.25rem;
+    }
+    .cap-n {
       font-family: var(--ff-display);
       font-size: .68rem; font-weight: 700;
-      letter-spacing: .1em; color: var(--txt-muted); margin-bottom: 1rem;
+      letter-spacing: .1em; color: var(--txt-muted); margin-bottom: .75rem;
     }
-    .svc-t {
+    .cap-t {
       font-family: var(--ff-display);
       font-size: 1.2rem; font-weight: 700;
-      color: var(--txt); margin-bottom: .7rem;
+      color: var(--txt); margin-bottom: .6rem;
     }
-    .svc-d { font-size: .88rem; color: var(--txt-2); line-height: 1.65; }
+    .cap-d { font-size: .88rem; color: var(--txt-2); line-height: 1.65; }
 
-    /* ─── Verticals ───────────────────────────────── */
-    .vert-grid {
+    /* ─── Projects ────────────────────────────────── */
+    .proj-grid {
       display: grid; grid-template-columns: repeat(3,1fr);
       gap: 1.375rem; margin-top: 3.25rem;
     }
-    .vert-card {
+    .proj-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px; padding: 2rem;
+      border-radius: 12px; padding: 1.875rem;
+      display: flex; flex-direction: column; gap: 0;
       transition: border-color .2s;
     }
-    .vert-card:hover { border-color: rgba(0,217,255,.2); }
-    .vert-tag {
-      display: inline-block; padding: .25rem .625rem;
-      background: var(--accent-dim); color: var(--accent);
+    .proj-card:hover { border-color: rgba(0,217,255,.18); }
+    .proj-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+    .proj-type {
       font-size: .68rem; font-weight: 600;
       letter-spacing: .1em; text-transform: uppercase;
-      border-radius: 4px; margin-bottom: 1.25rem;
+      color: var(--txt-muted);
     }
-    .vert-t {
+    .status-badge {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .2rem .625rem;
+      border-radius: 100px;
+      font-size: .68rem; font-weight: 600; letter-spacing: .06em;
+      border: 1px solid;
+    }
+    .status-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+    }
+    .status-prod {
+      color: #4ade80;
+      border-color: rgba(74,222,128,.25);
+      background: rgba(74,222,128,.07);
+    }
+    .status-prod .status-dot {
+      background: #4ade80;
+      animation: status-blink 2s ease-in-out infinite;
+    }
+    .status-dev {
+      color: var(--accent);
+      border-color: rgba(0,217,255,.25);
+      background: var(--accent-dim);
+    }
+    .status-dev .status-dot { background: var(--accent); }
+    .status-proto {
+      color: var(--txt-2);
+      border-color: var(--border);
+      background: transparent;
+    }
+    .status-proto .status-dot { background: var(--txt-muted); }
+    .proj-t {
       font-family: var(--ff-display);
-      font-size: 1.1rem; font-weight: 700;
-      color: var(--txt); margin-bottom: 1rem;
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--txt); margin-bottom: .6rem; line-height: 1.4;
     }
-    .vert-list { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
-    .vert-list li {
+    .proj-d { font-size: .86rem; color: var(--txt-2); line-height: 1.6; flex: 1; }
+    .proj-note {
+      margin-top: 1.25rem; padding-top: 1.25rem;
+      border-top: 1px solid var(--border-sub);
+      font-size: .75rem; color: var(--txt-muted); font-style: italic;
+    }
+    .proj-disclaimer {
+      margin-top: 1.5rem;
+      font-size: .82rem; color: var(--txt-muted);
       display: flex; align-items: flex-start; gap: .5rem;
-      font-size: .86rem; color: var(--txt-2); line-height: 1.5;
     }
-    .vert-list li::before {
-      content: '—'; color: var(--accent);
-      flex-shrink: 0; opacity: .55;
-      font-size: .75rem; margin-top: .1em;
+    .proj-disclaimer::before {
+      content: '—'; color: var(--txt-muted); opacity: .5; flex-shrink: 0;
     }
 
-    /* ─── Why ─────────────────────────────────────── */
-    .why-layout {
+    /* ─── Thesis ──────────────────────────────────── */
+    .thesis-sec {
+      padding: 100px 0;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .thesis-glow {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 900px; height: 400px;
+      background: radial-gradient(ellipse, rgba(0,217,255,.045) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .thesis-quote {
+      font-family: var(--ff-display);
+      font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+      font-weight: 700; letter-spacing: -.025em;
+      color: var(--txt); line-height: 1.25;
+      max-width: 820px; margin: 0 auto 2rem;
+      position: relative; z-index: 1;
+    }
+    .thesis-quote span { color: var(--accent); }
+    .thesis-body {
+      font-size: 1rem; color: var(--txt-2);
+      max-width: 560px; margin: 0 auto;
+      line-height: 1.75; position: relative; z-index: 1;
+    }
+
+    /* ─── About / Studio ──────────────────────────── */
+    .studio-layout {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 4rem; align-items: center; margin-top: 3.25rem;
     }
-    .why-stats-grid {
+    .studio-stats-grid {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 1px; background: var(--border);
       border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
     }
-    .why-stat {
+    .studio-stat {
       background: var(--surface); padding: 1.875rem;
     }
-    .why-num {
+    .studio-num {
       font-family: var(--ff-display);
       font-size: 2.5rem; font-weight: 800; line-height: 1.2;
       color: var(--txt); margin-bottom: .35rem; letter-spacing: -.02em;
     }
-    .why-num em { color: var(--accent); font-style: normal; }
-    .why-lbl { font-size: .85rem; color: var(--txt-2); line-height: 1.4; }
-    .why-pts { list-style: none; display: flex; flex-direction: column; gap: 1.375rem; }
-    .why-pt { display: flex; gap: 1rem; align-items: flex-start; }
-    .why-ico {
-      width: 32px; height: 32px; border-radius: 6px;
+    .studio-num em { color: var(--accent); font-style: normal; }
+    .studio-lbl { font-size: .85rem; color: var(--txt-2); line-height: 1.4; }
+    .studio-pts { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1.75rem; }
+    .studio-pt { display: flex; gap: .875rem; align-items: flex-start; }
+    .studio-ico {
+      width: 28px; height: 28px; border-radius: 6px;
       background: var(--accent-dim);
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; color: var(--accent);
+      flex-shrink: 0; color: var(--accent); margin-top: .1rem;
     }
-    .why-text strong {
+    .studio-text strong {
       font-family: var(--ff-display);
-      font-size: .9375rem; font-weight: 600;
-      color: var(--txt); display: block; margin-bottom: .2rem;
+      font-size: .9rem; font-weight: 600;
+      color: var(--txt); display: block; margin-bottom: .15rem;
     }
-    .why-text p { font-size: .875rem; color: var(--txt-2); line-height: 1.55; }
+    .studio-text p { font-size: .86rem; color: var(--txt-2); line-height: 1.55; }
 
-    /* ─── CTA Final ───────────────────────────────── */
+    /* ─── CTA / Colaborar ─────────────────────────── */
     .cta-sec {
       padding: 100px 0; text-align: center;
       position: relative; overflow: hidden;
@@ -341,7 +466,7 @@
     }
     .cta-sub {
       font-size: 1.05rem; color: var(--txt-2);
-      max-width: 460px; margin: 0 auto 2.5rem;
+      max-width: 420px; margin: 0 auto 2.5rem;
       line-height: 1.65;
     }
     .btn-wa {
@@ -384,14 +509,14 @@
 
     /* ─── Responsive ──────────────────────────────── */
     @media (max-width: 768px) {
-      nav { padding: 0 1.25rem; }
+      header { padding: 0 1.25rem; }
+      .nav-links { display: none; }
       .wrap { padding: 0 1.25rem; }
       .hero { padding: 110px 1.25rem 70px; }
-      .pain-grid,
-      .svc-grid,
-      .vert-grid  { grid-template-columns: 1fr; }
-      .why-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-      .why-stats-grid { grid-template-columns: 1fr 1fr; }
+      .cap-grid,
+      .proj-grid  { grid-template-columns: 1fr; }
+      .studio-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .studio-stats-grid { grid-template-columns: 1fr 1fr; }
       .hero-stats { flex-direction: column; gap: 1.5rem; }
       .vr { display: none; }
       footer { flex-direction: column; gap: .75rem; text-align: center; }
@@ -400,94 +525,209 @@
 </head>
 <body>
 
-  <!-- ── NAV ───────────────────────────────────────── -->
-  <nav>
-    <a href="#" class="logo">Execution<em>AI</em></a>
+  <!-- ── HEADER / NAV ───────────────────────────────── -->
+  <header>
+    <div class="nav-left">
+      <a href="#" class="logo">Execution<em>AI</em></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#capacidades">Capacidades</a></li>
+          <li><a href="#proyectos">Proyectos</a></li>
+          <li><a href="#estudio">Estudio</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
     <a href="https://wa.me/525539669841" target="_blank" rel="noopener" class="nav-btn">
-      <svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+      <svg class="ico" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
       </svg>
-      Habla con Omar
+      Hablar con nosotros
     </a>
-  </nav>
+  </header>
+
+  <main>
 
   <!-- ── HERO ──────────────────────────────────────── -->
-  <section class="hero">
-    <div class="hero-glow"></div>
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-glow" aria-hidden="true"></div>
     <div style="position:relative;z-index:1;">
-      <div class="eyebrow au">
-        <span class="eyebrow-dot"></span>
-        Fábrica de Software &amp; IA
+
+      <!-- Futuristic logo mark -->
+      <div class="hero-mark au" aria-hidden="true">
+        <svg width="88" height="88" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- outer dashed orbit -->
+          <circle cx="48" cy="48" r="44" stroke="rgba(0,217,255,0.15)" stroke-width="1" stroke-dasharray="3 6"/>
+          <!-- outer hexagon -->
+          <polygon points="48,4 85,26 85,70 48,92 11,70 11,26" stroke="rgba(0,217,255,0.65)" stroke-width="1.5" fill="none"/>
+          <!-- rotating inner hexagon -->
+          <g class="hero-mark-orbit">
+            <polygon points="48,18 70,31 70,65 48,78 26,65 26,31" stroke="rgba(0,217,255,0.25)" stroke-width="1" fill="none"/>
+          </g>
+          <!-- crosshair ticks -->
+          <line x1="48" y1="4"  x2="48" y2="36" stroke="rgba(0,217,255,0.4)" stroke-width="1"/>
+          <line x1="48" y1="60" x2="48" y2="92" stroke="rgba(0,217,255,0.4)" stroke-width="1"/>
+          <line x1="11" y1="48" x2="36" y2="48" stroke="rgba(0,217,255,0.4)" stroke-width="1"/>
+          <line x1="60" y1="48" x2="85" y2="48" stroke="rgba(0,217,255,0.4)" stroke-width="1"/>
+          <!-- center ring -->
+          <circle cx="48" cy="48" r="11" stroke="rgba(0,217,255,0.75)" stroke-width="1.5" fill="rgba(0,217,255,0.07)"/>
+          <!-- center dot -->
+          <circle cx="48" cy="48" r="3.5" fill="#00D9FF"/>
+          <!-- vertex dots -->
+          <circle cx="48" cy="4"  r="2.5" fill="#00D9FF" opacity=".9"/>
+          <circle cx="85" cy="26" r="2.5" fill="#00D9FF" opacity=".9"/>
+          <circle cx="85" cy="70" r="2.5" fill="#00D9FF" opacity=".9"/>
+          <circle cx="48" cy="92" r="2.5" fill="#00D9FF" opacity=".9"/>
+          <circle cx="11" cy="70" r="2.5" fill="#00D9FF" opacity=".9"/>
+          <circle cx="11" cy="26" r="2.5" fill="#00D9FF" opacity=".9"/>
+        </svg>
       </div>
-      <h1 class="au d1">
-        Automatización inteligente<br>para empresas que<br><span class="hi">juegan en grande</span>
-      </h1>
-      <p class="hero-sub au d2">
-        Construimos software a medida e integramos IA en los procesos de tu empresa. Menos fricción, más control, resultados visibles desde el primer mes.
+
+      <!-- AI LAB STUDIOS mega wordmark -->
+      <div class="hero-hud au d1">
+        <div class="hero-hud-tr" style="position:absolute;inset:0;pointer-events:none;"></div>
+        <h1 id="hero-heading" class="hero-studio-title">
+          EXECUTION <span class="ai">AI</span>
+        </h1>
+      </div>
+
+      <!-- Tagline -->
+      <p class="hero-tagline au d2">
+        <strong>AI Studios</strong><br>
+        Tu Partner en Estrategia y Ejecución.<br>
+        De ideas a sistemas inteligentes en tiempo record.
       </p>
+
+      <!-- CTA -->
       <div class="au d3">
         <a href="https://wa.me/525539669841" target="_blank" rel="noopener" class="btn-primary">
-          <svg class="ico" width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+          <svg class="ico" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
           </svg>
-          Habla con Omar
+          Hablar con nosotros
         </a>
       </div>
+
+      <!-- Stats -->
       <div class="hero-stats au d4">
         <div class="stat">
           <div class="stat-num">15<em>+</em></div>
           <div class="stat-lbl">Años en tecnología</div>
         </div>
-        <div class="vr"></div>
+        <div class="vr" aria-hidden="true"></div>
         <div class="stat">
           <div class="stat-num">7<em>+</em></div>
           <div class="stat-lbl">Años liderando en Uber</div>
         </div>
-        <div class="vr"></div>
+        <div class="vr" aria-hidden="true"></div>
         <div class="stat">
-          <div class="stat-num">4</div>
+          <div class="stat-num">5</div>
           <div class="stat-lbl">Continentes atendidos</div>
         </div>
       </div>
+
     </div>
   </section>
 
   <hr class="divider">
 
-  <!-- ── PAIN POINTS ───────────────────────────────── -->
-  <section class="sec">
+  <!-- ── CAPACIDADES ───────────────────────────────── -->
+  <section class="sec" id="capacidades" aria-labelledby="cap-heading">
     <div class="wrap">
-      <div class="sec-label">El problema</div>
-      <h2 class="sec-title">Las preguntas que tu negocio<br>necesita responder hoy</h2>
-      <p class="sec-sub">La mayoría de las empresas lo saben — pero muy pocas actúan a tiempo. Aquí es donde entramos nosotros.</p>
+      <div class="sec-label">Capacidades</div>
+      <h2 id="cap-heading" class="sec-title">Del concepto a la producción</h2>
+      <p class="sec-sub">Construimos sistemas funcionales — no demos, no prototipos olvidados. Cada proyecto termina en producción.</p>
 
-      <div class="pain-grid">
-        <div class="pain-card">
-          <div class="pain-ico">
+      <div class="cap-grid">
+        <div class="cap-card">
+          <div class="cap-ico" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              <circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.93 4.93l2.12 2.12m9.9 9.9 2.12 2.12M4.93 19.07l2.12-2.12m9.9-9.9 2.12-2.12"/>
             </svg>
           </div>
-          <div class="pain-q">¿Cuánto tiempo pierde tu equipo en tareas repetitivas?</div>
-          <div class="pain-d">Captura manual, reportes que tardan horas, procesos que deberían ser automáticos. Ese tiempo tiene un costo real y acumulado.</div>
+          <div class="cap-n">01</div>
+          <div class="cap-t">Agentes de IA</div>
+          <div class="cap-d">Sistemas autónomos que ejecutan tareas complejas sin intervención humana. Monitorean, deciden y actúan — en producción, no en sandbox.</div>
         </div>
-        <div class="pain-card">
-          <div class="pain-ico">
+        <div class="cap-card">
+          <div class="cap-ico" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <div class="cap-n">02</div>
+          <div class="cap-t">Automatización de procesos</div>
+          <div class="cap-d">Flujos inteligentes que eliminan trabajo manual y conectan tus sistemas. Menos errores, menor costo operativo, velocidad de ejecución real.</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-ico" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+            </svg>
+          </div>
+          <div class="cap-n">03</div>
+          <div class="cap-t">Productos de IA a medida</div>
+          <div class="cap-d">Software con IA nativa construido para tu operación específica. No herramientas genéricas adaptadas — sistemas diseñados desde cero para ti.</div>
+        </div>
+        <div class="cap-card">
+          <div class="cap-ico" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
             </svg>
           </div>
-          <div class="pain-q">¿Tienes visibilidad real de tu negocio en este momento?</div>
-          <div class="pain-d">Sin datos en tiempo real, tomas decisiones con información vieja. La diferencia entre crecer y estancarse está en lo que puedes medir hoy.</div>
+          <div class="cap-n">04</div>
+          <div class="cap-t">Sistemas de ejecución</div>
+          <div class="cap-d">Infraestructura de datos, dashboards y pipelines que convierten información en acción. Visibilidad en tiempo real y reportes que se generan solos.</div>
         </div>
-        <div class="pain-card">
-          <div class="pain-ico">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-            </svg>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── PROYECTOS ──────────────────────────────────── -->
+  <section class="sec" id="proyectos" aria-labelledby="proj-heading">
+    <div class="wrap">
+      <div class="sec-label">Proyectos</div>
+      <h2 id="proj-heading" class="sec-title">Lo que estamos construyendo</h2>
+      <p class="sec-sub">Una muestra del tipo de sistemas que desarrollamos. Nombres omitidos por acuerdos de confidencialidad.</p>
+
+      <div class="proj-grid">
+        <div class="proj-card">
+          <div class="proj-header">
+            <span class="proj-type">Producto de IA</span>
+            <span class="status-badge status-prod">
+              <span class="status-dot" aria-hidden="true"></span>
+              En producción
+            </span>
           </div>
-          <div class="pain-q">¿Estás usando IA, o dejando que tu competencia lo haga primero?</div>
-          <div class="pain-d">Las empresas que integren inteligencia artificial hoy tendrán una ventaja estructural que después será muy difícil de alcanzar.</div>
+          <div class="proj-t">MAPPA Travels</div>
+          <div class="proj-d">Backend de software con IA nativa para agencias de viajes. Automatiza cotizaciones, gestión de itinerarios y comunicación con clientes — construido para operar a escala.</div>
+          <div class="proj-note">Industria: Turismo y agencias de viajes</div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-header">
+            <span class="proj-type">CRM + Automatización</span>
+            <span class="status-badge status-prod">
+              <span class="status-dot" aria-hidden="true"></span>
+              En producción
+            </span>
+          </div>
+          <div class="proj-t">Leasing México</div>
+          <div class="proj-d">Plataforma de posicionamiento digital y CRM de cartera de clientes con flujo AI nativo. Gestiona prospectos, seguimiento automatizado y pipeline de arrendamiento en tiempo real.</div>
+          <div class="proj-note">Industria: Arrendamiento financiero</div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-header">
+            <span class="proj-type">ERP a medida</span>
+            <span class="status-badge status-dev">
+              <span class="status-dot" aria-hidden="true"></span>
+              En desarrollo
+            </span>
+          </div>
+          <div class="proj-t">ERP con integración a marketplaces</div>
+          <div class="proj-d">Sistema ERP para empresa líder en México, con integración nativa a Amazon Marketplace y Mercado Libre. Inventario, órdenes y facturación sincronizados en un solo sistema.</div>
+          <div class="proj-note">Industria: Manufactura y e-commerce</div>
         </div>
       </div>
     </div>
@@ -495,138 +735,50 @@
 
   <hr class="divider">
 
-  <!-- ── SERVICES ──────────────────────────────────── -->
-  <section class="sec">
+  <!-- ── TESIS ──────────────────────────────────────── -->
+  <section class="thesis-sec" aria-labelledby="thesis-heading">
+    <div class="thesis-glow" aria-hidden="true"></div>
     <div class="wrap">
-      <div class="sec-label">Qué hacemos</div>
-      <h2 class="sec-title">Software construido para<br>tu industria, no para todos</h2>
-      <p class="sec-sub">No vendemos herramientas genéricas. Construimos exactamente lo que tu operación necesita.</p>
-
-      <div class="svc-grid">
-        <div class="svc-card">
-          <div class="svc-n">01</div>
-          <div class="svc-t">Automatización de procesos</div>
-          <div class="svc-d">Identificamos los cuellos de botella en tu operación y los convertimos en flujos automáticos. Menos errores humanos, menos costo operativo, más velocidad de ejecución.</div>
-        </div>
-        <div class="svc-card">
-          <div class="svc-n">02</div>
-          <div class="svc-t">Software a medida</div>
-          <div class="svc-d">Desarrollamos plataformas, sistemas internos y aplicaciones diseñadas específicamente para cómo trabaja tu empresa — no al revés. Sin compromisos con herramientas genéricas.</div>
-        </div>
-        <div class="svc-card">
-          <div class="svc-n">03</div>
-          <div class="svc-t">Integración de IA</div>
-          <div class="svc-d">Incorporamos los modelos de lenguaje más avanzados para generar contenido personalizado a escala, analizar datos operativos y automatizar interacciones con tus clientes.</div>
-        </div>
-        <div class="svc-card">
-          <div class="svc-n">04</div>
-          <div class="svc-t">Visibilidad en tiempo real</div>
-          <div class="svc-d">Dashboards conectados a tus sistemas actuales. Métricas accionables, reportes que se generan solos y alertas cuando algo necesita tu atención — antes de que sea un problema.</div>
-        </div>
-      </div>
+      <div class="sec-label" style="justify-content:center;margin-bottom:2rem;">Nuestra tesis</div>
+      <blockquote>
+        <p id="thesis-heading" class="thesis-quote">
+          "La IA más valiosa no es la que responde preguntas —<br>es la que <span>ejecuta trabajo.</span>"
+        </p>
+      </blockquote>
+      <p class="thesis-body">
+        Construimos sistemas diseñados para operar, no solo para asistir. Cada proyecto tiene un output medible: tiempo ahorrado, errores eliminados, procesos que antes requerían personas ahora funcionan solos.
+      </p>
     </div>
   </section>
 
   <hr class="divider">
 
-  <!-- ── VERTICALS ──────────────────────────────────── -->
-  <section class="sec">
+  <!-- ── EL ESTUDIO ─────────────────────────────────── -->
+  <section class="sec" id="estudio" aria-labelledby="studio-heading">
     <div class="wrap">
-      <div class="sec-label">Casos de uso</div>
-      <h2 class="sec-title">Aplicaciones por industria</h2>
-      <p class="sec-sub">Sin importar el giro, hay procesos que pueden transformarse. Aquí algunos ejemplos de lo que construimos.</p>
-
-      <div class="vert-grid">
-        <div class="vert-card">
-          <div class="vert-tag">Logística</div>
-          <div class="vert-t">Control total de operación</div>
-          <ul class="vert-list">
-            <li>Rastreo de flota y rutas en tiempo real</li>
-            <li>Asignación automática de conductores según carga</li>
-            <li>Reportes de eficiencia y costos por unidad</li>
-            <li>Alertas automáticas a clientes sobre sus entregas</li>
-          </ul>
-        </div>
-        <div class="vert-card">
-          <div class="vert-tag">Salud</div>
-          <div class="vert-t">Experiencia médica sin fricción</div>
-          <ul class="vert-list">
-            <li>Agendamiento automático de citas y recordatorios</li>
-            <li>Expediente digital accesible desde cualquier dispositivo</li>
-            <li>Generación de reportes clínicos con IA</li>
-            <li>Comunicación personalizada con pacientes</li>
-          </ul>
-        </div>
-        <div class="vert-card">
-          <div class="vert-tag">Empresas de servicios</div>
-          <div class="vert-t">CRM inteligente y ventas aceleradas</div>
-          <ul class="vert-list">
-            <li>Seguimiento automático de prospectos y clientes</li>
-            <li>Cotizaciones generadas en segundos con IA</li>
-            <li>Pipeline de ventas con alertas y predicciones</li>
-            <li>Comunicación automatizada por WhatsApp y correo</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider">
-
-  <!-- ── WHY EXECUTION AI ───────────────────────────── -->
-  <section class="sec">
-    <div class="wrap">
-      <div class="sec-label">Por qué ExecutionAI</div>
-      <div class="why-layout">
+      <div class="sec-label">El estudio</div>
+      <div class="studio-layout">
         <div>
-          <h2 class="sec-title">Tecnología de punta con experiencia de primer nivel</h2>
-          <p class="sec-sub" style="margin-bottom:2rem;">No somos una agencia genérica. Tenemos historial comprobado en algunos de los proyectos de tecnología más exigentes y complejos del mundo.</p>
-          <ul class="why-pts">
-            <li class="why-pt">
-              <div class="why-ico">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              </div>
-              <div class="why-text">
-                <strong>Escala global comprobada</strong>
-                <p>7+ años liderando proyectos de innovación en Uber a nivel global — con la velocidad, presión y complejidad que eso implica.</p>
-              </div>
-            </li>
-            <li class="why-pt">
-              <div class="why-ico">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              </div>
-              <div class="why-text">
-                <strong>IA real, no promesas</strong>
-                <p>Integramos los modelos más avanzados disponibles hoy y sabemos exactamente cómo hacer que funcionen en tu industria específica.</p>
-              </div>
-            </li>
-            <li class="why-pt">
-              <div class="why-ico">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              </div>
-              <div class="why-text">
-                <strong>Resultados, no código</strong>
-                <p>Nuestra métrica de éxito no es qué tan complejo fue el sistema — es cuánto mejoró tu operación, y qué tan rápido.</p>
-              </div>
-            </li>
-          </ul>
+          <h2 id="studio-heading" class="sec-title">Construido por ingenieros,<br>para operaciones reales.</h2>
+          <p class="sec-sub" style="margin-bottom:0;">
+            ExecutionAI es un AI Lab Studios especializado en sistemas de ejecución. Detrás del estudio hay 15+ años de ingeniería y 7+ años liderando proyectos de innovación a escala global en Uber — la experiencia que hace la diferencia entre un demo y un sistema en producción.
+          </p>
         </div>
-        <div class="why-stats-grid">
-          <div class="why-stat">
-            <div class="why-num">15<em>+</em></div>
-            <div class="why-lbl">Años construyendo tecnología</div>
+        <div class="studio-stats-grid" aria-label="Estadísticas del estudio">
+          <div class="studio-stat">
+            <div class="studio-num" style="font-size:1.1rem;letter-spacing:-.01em;margin-bottom:.5rem;">Escala global comprobada</div>
+            <div class="studio-lbl">7+ años en Uber diseñando y entregando proyectos de innovación en múltiples mercados y continentes.</div>
           </div>
-          <div class="why-stat">
-            <div class="why-num">7<em>+</em></div>
-            <div class="why-lbl">Años en Uber a nivel global</div>
+          <div class="studio-stat">
+            <div class="studio-num" style="font-size:1.1rem;letter-spacing:-.01em;margin-bottom:.5rem;">IA aplicada, no teórica</div>
+            <div class="studio-lbl">Trabajamos con los modelos más avanzados disponibles. Sabemos qué funciona en producción y qué no.</div>
           </div>
-          <div class="why-stat">
-            <div class="why-num">4</div>
-            <div class="why-lbl">Continentes en proyectos entregados</div>
+          <div class="studio-stat">
+            <div class="studio-num" style="font-size:1.1rem;letter-spacing:-.01em;margin-bottom:.5rem;">Output medible</div>
+            <div class="studio-lbl">Nuestra métrica de éxito es simple: ¿cuánto mejoró tu operación? No líneas de código — resultados.</div>
           </div>
-          <div class="why-stat">
-            <div class="why-num" style="font-size:2rem;">Hoy</div>
-            <div class="why-lbl">Es el momento de empezar</div>
+          <div class="studio-stat">
+            <div class="studio-num" style="font-size:1.75rem;letter-spacing:-.01em;">Builders</div>
           </div>
         </div>
       </div>
@@ -635,27 +787,29 @@
 
   <hr class="divider">
 
-  <!-- ── CTA FINAL ─────────────────────────────────── -->
-  <section class="cta-sec">
-    <div class="cta-glow"></div>
+  <!-- ── CONTACTO / COLABORAR ───────────────────────── -->
+  <section class="cta-sec" id="contacto" aria-labelledby="cta-heading">
+    <div class="cta-glow" aria-hidden="true"></div>
     <div class="wrap" style="position:relative;z-index:1;">
-      <div class="sec-label" style="justify-content:center;margin-bottom:1.5rem;">El siguiente paso</div>
-      <h2 class="cta-title">¿Listo para transformar<br>tu operación?</h2>
-      <p class="cta-sub">Habla con Omar. Cuéntale cómo funciona tu negocio y en qué puede hacer la diferencia la tecnología.</p>
+      <div class="sec-label" style="justify-content:center;margin-bottom:1.5rem;">Contacto</div>
+      <h2 id="cta-heading" class="cta-title">¿Tienes un sistema<br>en mente?</h2>
+      <p class="cta-sub">Si puedes imaginarlo, podemos ejecutarlo.</p>
       <a href="https://wa.me/525539669841" target="_blank" rel="noopener" class="btn-wa">
-        <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
         </svg>
-        Hablar con Omar por WhatsApp
+        Hablar por WhatsApp
       </a>
-      <p class="cta-note">Omar responde en minutos — sin compromiso.</p>
+
     </div>
   </section>
+
+  </main>
 
   <!-- ── FOOTER ─────────────────────────────────────── -->
   <footer>
     <div class="f-logo">Execution<em>AI</em></div>
-    <p>© 2025 ExecutionAI · México</p>
+    <p>© 2026 ExecutionAI · AI Lab Studios · México</p>
   </footer>
 
 </body>
