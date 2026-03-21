@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExecutionAI — Automatización e IA para tu empresa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --bg:           #07070A;
+      --surface:      #0F0F14;
+      --surface-2:    #161620;
+      --border:       #1E1E2A;
+      --border-sub:   #13131A;
+      --txt:          #EEEAE3;
+      --txt-2:        #8A8A96;
+      --txt-muted:    #4A4A58;
+      --accent:       #00D9FF;
+      --accent-dim:   rgba(0,217,255,0.10);
+      --ff-display:   'Syne', sans-serif;
+      --ff-body:      'Instrument Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--txt);
+      font-family: var(--ff-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Subtle grid texture */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── Animations ──────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes glow-pulse {
+      0%,100% { opacity: .45; }
+      50%      { opacity: .75; }
+    }
+    .au    { animation: fadeUp .75s cubic-bezier(.16,1,.3,1) both; }
+    .d1    { animation-delay: .10s; }
+    .d2    { animation-delay: .22s; }
+    .d3    { animation-delay: .36s; }
+    .d4    { animation-delay: .52s; }
+
+    /* ─── Layout ──────────────────────────────────── */
+    .wrap  { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    section { position: relative; z-index: 1; }
+    .divider { border: none; border-top: 1px solid var(--border-sub); }
+
+    /* ─── Nav ─────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 62px; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(7,7,10,.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-sub);
+    }
+    .logo {
+      font-family: var(--ff-display);
+      font-size: 1.05rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--txt); text-decoration: none;
+    }
+    .logo em { color: var(--accent); font-style: normal; }
+    .nav-btn {
+      display: inline-flex; align-items: center; gap: .45rem;
+      padding: .5rem 1.25rem;
+      background: var(--accent); color: #07070A;
+      font-family: var(--ff-body); font-size: .85rem; font-weight: 600;
+      border-radius: 6px; text-decoration: none;
+      transition: opacity .15s, transform .15s;
+    }
+    .nav-btn:hover  { opacity: .88; transform: translateY(-1px); }
+    .nav-btn:active { transform: translateY(0); }
+
+    /* ─── Hero ────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 100px 2rem 80px;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; top: 18%; left: 50%;
+      transform: translateX(-50%);
+      width: 640px; height: 420px;
+      background: radial-gradient(ellipse, rgba(0,217,255,.07) 0%, transparent 68%);
+      pointer-events: none;
+      animation: glow-pulse 5s ease-in-out infinite;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .35rem .875rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: .72rem; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--txt-2); margin-bottom: 2rem;
+    }
+    .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+    h1 {
+      font-family: var(--ff-display);
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      font-weight: 800; line-height: 1.03; letter-spacing: -.03em;
+      color: var(--txt); margin-bottom: 1.5rem;
+      max-width: 860px; margin-left: auto; margin-right: auto;
+    }
+    h1 .hi { color: var(--accent); }
+    .hero-sub {
+      font-size: clamp(.97rem, 1.8vw, 1.15rem);
+      color: var(--txt-2); max-width: 540px; margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .55rem;
+      padding: .875rem 2rem;
+      background: var(--accent); color: #07070A;
+      font-family: var(--ff-body); font-size: .9375rem; font-weight: 600;
+      border-radius: 8px; text-decoration: none;
+      box-shadow: 0 0 0 rgba(0,217,255,0);
+      transition: transform .15s, box-shadow .2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,217,255,.28), 0 2px 8px rgba(0,217,255,.14);
+    }
+    .btn-primary:active { transform: translateY(0); }
+
+    .hero-stats {
+      display: flex; align-items: center; gap: 2.25rem;
+      justify-content: center;
+      margin-top: 4.5rem; padding-top: 3rem;
+      border-top: 1px solid var(--border-sub);
+    }
+    .stat-num {
+      font-family: var(--ff-display);
+      font-size: 2.5rem; font-weight: 800; line-height: 1.2;
+      color: var(--txt); letter-spacing: -.02em;
+    }
+    .stat-num em { color: var(--accent); font-style: normal; }
+    .stat-lbl {
+      font-size: .78rem; color: var(--txt-2);
+      margin-top: .35rem; letter-spacing: .04em;
+    }
+    .vr { width: 1px; height: 38px; background: var(--border); }
+
+    /* ─── Section commons ─────────────────────────── */
+    .sec { padding: 96px 0; }
+    .sec-label {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-size: .68rem; font-weight: 600;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.125rem;
+    }
+    .sec-label::before {
+      content: ''; display: inline-block;
+      width: 18px; height: 1px; background: var(--accent);
+    }
+    .sec-title {
+      font-family: var(--ff-display);
+      font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+      font-weight: 700; letter-spacing: -.02em;
+      color: var(--txt); margin-bottom: .875rem;
+    }
+    .sec-sub {
+      font-size: 1.03rem; color: var(--txt-2);
+      max-width: 500px; line-height: 1.68;
+    }
+
+    /* ─── Pain points ─────────────────────────────── */
+    .pain-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 12px;
+      overflow: visible; margin-top: 3.25rem;
+    }
+    .pain-card {
+      background: var(--surface); padding: 2.25rem;
+      transition: background .2s; overflow: visible;
+    }
+    .pain-card:first-child { border-radius: 12px 0 0 12px; }
+    .pain-card:last-child  { border-radius: 0 12px 12px 0; }
+    .pain-card:hover { background: var(--surface-2); }
+    .pain-ico {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: var(--accent-dim);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); margin-bottom: 1.25rem;
+    }
+    .pain-q {
+      font-family: var(--ff-display);
+      font-size: 1.03rem; font-weight: 600;
+      color: var(--txt); margin-bottom: .7rem; line-height: 1.45;
+      overflow: visible;
+    }
+    .pain-d { font-size: .875rem; color: var(--txt-2); line-height: 1.65; overflow: visible; }
+
+    /* ─── Services ────────────────────────────────── */
+    .svc-grid {
+      display: grid; grid-template-columns: repeat(2,1fr);
+      gap: 1.375rem; margin-top: 3.25rem;
+    }
+    .svc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+      position: relative; overflow: hidden;
+      transition: border-color .2s, transform .2s;
+    }
+    .svc-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .svc-card:hover { border-color: rgba(0,217,255,.22); transform: translateY(-2px); }
+    .svc-card:hover::before { opacity: 1; }
+    .svc-n {
+      font-family: var(--ff-display);
+      font-size: .68rem; font-weight: 700;
+      letter-spacing: .1em; color: var(--txt-muted); margin-bottom: 1rem;
+    }
+    .svc-t {
+      font-family: var(--ff-display);
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--txt); margin-bottom: .7rem;
+    }
+    .svc-d { font-size: .88rem; color: var(--txt-2); line-height: 1.65; }
+
+    /* ─── Verticals ───────────────────────────────── */
+    .vert-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1.375rem; margin-top: 3.25rem;
+    }
+    .vert-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+      transition: border-color .2s;
+    }
+    .vert-card:hover { border-color: rgba(0,217,255,.2); }
+    .vert-tag {
+      display: inline-block; padding: .25rem .625rem;
+      background: var(--accent-dim); color: var(--accent);
+      font-size: .68rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      border-radius: 4px; margin-bottom: 1.25rem;
+    }
+    .vert-t {
+      font-family: var(--ff-display);
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--txt); margin-bottom: 1rem;
+    }
+    .vert-list { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .vert-list li {
+      display: flex; align-items: flex-start; gap: .5rem;
+      font-size: .86rem; color: var(--txt-2); line-height: 1.5;
+    }
+    .vert-list li::before {
+      content: '—'; color: var(--accent);
+      flex-shrink: 0; opacity: .55;
+      font-size: .75rem; margin-top: .1em;
+    }
+
+    /* ─── Why ─────────────────────────────────────── */
+    .why-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center; margin-top: 3.25rem;
+    }
+    .why-stats-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    }
+    .why-stat {
+      background: var(--surface); padding: 1.875rem;
+    }
+    .why-num {
+      font-family: var(--ff-display);
+      font-size: 2.5rem; font-weight: 800; line-height: 1.2;
+      color: var(--txt); margin-bottom: .35rem; letter-spacing: -.02em;
+    }
+    .why-num em { color: var(--accent); font-style: normal; }
+    .why-lbl { font-size: .85rem; color: var(--txt-2); line-height: 1.4; }
+    .why-pts { list-style: none; display: flex; flex-direction: column; gap: 1.375rem; }
+    .why-pt { display: flex; gap: 1rem; align-items: flex-start; }
+    .why-ico {
+      width: 32px; height: 32px; border-radius: 6px;
+      background: var(--accent-dim);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--accent);
+    }
+    .why-text strong {
+      font-family: var(--ff-display);
+      font-size: .9375rem; font-weight: 600;
+      color: var(--txt); display: block; margin-bottom: .2rem;
+    }
+    .why-text p { font-size: .875rem; color: var(--txt-2); line-height: 1.55; }
+
+    /* ─── CTA Final ───────────────────────────────── */
+    .cta-sec {
+      padding: 100px 0; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute; bottom: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 340px;
+      background: radial-gradient(ellipse, rgba(0,217,255,.055) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .cta-title {
+      font-family: var(--ff-display);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 800; letter-spacing: -.025em;
+      color: var(--txt); margin-bottom: 1rem;
+    }
+    .cta-sub {
+      font-size: 1.05rem; color: var(--txt-2);
+      max-width: 460px; margin: 0 auto 2.5rem;
+      line-height: 1.65;
+    }
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: .6rem;
+      padding: 1rem 2.25rem;
+      background: var(--accent); color: #07070A;
+      font-family: var(--ff-body); font-size: 1rem; font-weight: 700;
+      border-radius: 10px; text-decoration: none;
+      box-shadow: 0 0 40px rgba(0,217,255,.18);
+      transition: transform .15s, box-shadow .2s;
+    }
+    .btn-wa:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 48px rgba(0,217,255,.36);
+    }
+    .btn-wa:active { transform: translateY(0); }
+    .cta-note {
+      font-size: .82rem; color: var(--txt-muted);
+      margin-top: 1rem; letter-spacing: .02em;
+    }
+
+    /* ─── Footer ──────────────────────────────────── */
+    footer {
+      padding: 1.875rem 2rem;
+      border-top: 1px solid var(--border-sub);
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; z-index: 1;
+    }
+    .f-logo {
+      font-family: var(--ff-display);
+      font-size: .85rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--txt-muted);
+    }
+    .f-logo em { color: var(--accent); font-style: normal; }
+    footer p { font-size: .78rem; color: var(--txt-muted); }
+
+    /* ─── SVG icon helper ─────────────────────────── */
+    .ico { display: inline-block; flex-shrink: 0; }
+
+    /* ─── Responsive ──────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1.25rem; }
+      .wrap { padding: 0 1.25rem; }
+      .hero { padding: 110px 1.25rem 70px; }
+      .pain-grid,
+      .svc-grid,
+      .vert-grid  { grid-template-columns: 1fr; }
+      .why-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .why-stats-grid { grid-template-columns: 1fr 1fr; }
+      .hero-stats { flex-direction: column; gap: 1.5rem; }
+      .vr { display: none; }
+      footer { flex-direction: column; gap: .75rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ───────────────────────────────────────── -->
+  <nav>
+    <a href="#" class="logo">Execution<em>AI</em></a>
+    <a href="https://wa.me/525539669841" target="_blank" rel="noopener" class="nav-btn">
+      <svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Habla con Omar
+    </a>
+  </nav>
+
+  <!-- ── HERO ──────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div style="position:relative;z-index:1;">
+      <div class="eyebrow au">
+        <span class="eyebrow-dot"></span>
+        Fábrica de Software &amp; IA
+      </div>
+      <h1 class="au d1">
+        Automatización inteligente<br>para empresas que<br><span class="hi">juegan en grande</span>
+      </h1>
+      <p class="hero-sub au d2">
+        Construimos software a medida e integramos IA en los procesos de tu empresa. Menos fricción, más control, resultados visibles desde el primer mes.
+      </p>
+      <div class="au d3">
+        <a href="https://wa.me/525539669841" target="_blank" rel="noopener" class="btn-primary">
+          <svg class="ico" width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Habla con Omar
+        </a>
+      </div>
+      <div class="hero-stats au d4">
+        <div class="stat">
+          <div class="stat-num">15<em>+</em></div>
+          <div class="stat-lbl">Años en tecnología</div>
+        </div>
+        <div class="vr"></div>
+        <div class="stat">
+          <div class="stat-num">7<em>+</em></div>
+          <div class="stat-lbl">Años liderando en Uber</div>
+        </div>
+        <div class="vr"></div>
+        <div class="stat">
+          <div class="stat-num">4</div>
+          <div class="stat-lbl">Continentes atendidos</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── PAIN POINTS ───────────────────────────────── -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-label">El problema</div>
+      <h2 class="sec-title">Las preguntas que tu negocio<br>necesita responder hoy</h2>
+      <p class="sec-sub">La mayoría de las empresas lo saben — pero muy pocas actúan a tiempo. Aquí es donde entramos nosotros.</p>
+
+      <div class="pain-grid">
+        <div class="pain-card">
+          <div class="pain-ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="pain-q">¿Cuánto tiempo pierde tu equipo en tareas repetitivas?</div>
+          <div class="pain-d">Captura manual, reportes que tardan horas, procesos que deberían ser automáticos. Ese tiempo tiene un costo real y acumulado.</div>
+        </div>
+        <div class="pain-card">
+          <div class="pain-ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+          </div>
+          <div class="pain-q">¿Tienes visibilidad real de tu negocio en este momento?</div>
+          <div class="pain-d">Sin datos en tiempo real, tomas decisiones con información vieja. La diferencia entre crecer y estancarse está en lo que puedes medir hoy.</div>
+        </div>
+        <div class="pain-card">
+          <div class="pain-ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+          </div>
+          <div class="pain-q">¿Estás usando IA, o dejando que tu competencia lo haga primero?</div>
+          <div class="pain-d">Las empresas que integren inteligencia artificial hoy tendrán una ventaja estructural que después será muy difícil de alcanzar.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── SERVICES ──────────────────────────────────── -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-label">Qué hacemos</div>
+      <h2 class="sec-title">Software construido para<br>tu industria, no para todos</h2>
+      <p class="sec-sub">No vendemos herramientas genéricas. Construimos exactamente lo que tu operación necesita.</p>
+
+      <div class="svc-grid">
+        <div class="svc-card">
+          <div class="svc-n">01</div>
+          <div class="svc-t">Automatización de procesos</div>
+          <div class="svc-d">Identificamos los cuellos de botella en tu operación y los convertimos en flujos automáticos. Menos errores humanos, menos costo operativo, más velocidad de ejecución.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-n">02</div>
+          <div class="svc-t">Software a medida</div>
+          <div class="svc-d">Desarrollamos plataformas, sistemas internos y aplicaciones diseñadas específicamente para cómo trabaja tu empresa — no al revés. Sin compromisos con herramientas genéricas.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-n">03</div>
+          <div class="svc-t">Integración de IA</div>
+          <div class="svc-d">Incorporamos los modelos de lenguaje más avanzados para generar contenido personalizado a escala, analizar datos operativos y automatizar interacciones con tus clientes.</div>
+        </div>
+        <div class="svc-card">
+          <div class="svc-n">04</div>
+          <div class="svc-t">Visibilidad en tiempo real</div>
+          <div class="svc-d">Dashboards conectados a tus sistemas actuales. Métricas accionables, reportes que se generan solos y alertas cuando algo necesita tu atención — antes de que sea un problema.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── VERTICALS ──────────────────────────────────── -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-label">Casos de uso</div>
+      <h2 class="sec-title">Aplicaciones por industria</h2>
+      <p class="sec-sub">Sin importar el giro, hay procesos que pueden transformarse. Aquí algunos ejemplos de lo que construimos.</p>
+
+      <div class="vert-grid">
+        <div class="vert-card">
+          <div class="vert-tag">Logística</div>
+          <div class="vert-t">Control total de operación</div>
+          <ul class="vert-list">
+            <li>Rastreo de flota y rutas en tiempo real</li>
+            <li>Asignación automática de conductores según carga</li>
+            <li>Reportes de eficiencia y costos por unidad</li>
+            <li>Alertas automáticas a clientes sobre sus entregas</li>
+          </ul>
+        </div>
+        <div class="vert-card">
+          <div class="vert-tag">Salud</div>
+          <div class="vert-t">Experiencia médica sin fricción</div>
+          <ul class="vert-list">
+            <li>Agendamiento automático de citas y recordatorios</li>
+            <li>Expediente digital accesible desde cualquier dispositivo</li>
+            <li>Generación de reportes clínicos con IA</li>
+            <li>Comunicación personalizada con pacientes</li>
+          </ul>
+        </div>
+        <div class="vert-card">
+          <div class="vert-tag">Empresas de servicios</div>
+          <div class="vert-t">CRM inteligente y ventas aceleradas</div>
+          <ul class="vert-list">
+            <li>Seguimiento automático de prospectos y clientes</li>
+            <li>Cotizaciones generadas en segundos con IA</li>
+            <li>Pipeline de ventas con alertas y predicciones</li>
+            <li>Comunicación automatizada por WhatsApp y correo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── WHY EXECUTION AI ───────────────────────────── -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-label">Por qué ExecutionAI</div>
+      <div class="why-layout">
+        <div>
+          <h2 class="sec-title">Tecnología de punta con experiencia de primer nivel</h2>
+          <p class="sec-sub" style="margin-bottom:2rem;">No somos una agencia genérica. Tenemos historial comprobado en algunos de los proyectos de tecnología más exigentes y complejos del mundo.</p>
+          <ul class="why-pts">
+            <li class="why-pt">
+              <div class="why-ico">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="why-text">
+                <strong>Escala global comprobada</strong>
+                <p>7+ años liderando proyectos de innovación en Uber a nivel global — con la velocidad, presión y complejidad que eso implica.</p>
+              </div>
+            </li>
+            <li class="why-pt">
+              <div class="why-ico">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="why-text">
+                <strong>IA real, no promesas</strong>
+                <p>Integramos los modelos más avanzados disponibles hoy y sabemos exactamente cómo hacer que funcionen en tu industria específica.</p>
+              </div>
+            </li>
+            <li class="why-pt">
+              <div class="why-ico">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="why-text">
+                <strong>Resultados, no código</strong>
+                <p>Nuestra métrica de éxito no es qué tan complejo fue el sistema — es cuánto mejoró tu operación, y qué tan rápido.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="why-stats-grid">
+          <div class="why-stat">
+            <div class="why-num">15<em>+</em></div>
+            <div class="why-lbl">Años construyendo tecnología</div>
+          </div>
+          <div class="why-stat">
+            <div class="why-num">7<em>+</em></div>
+            <div class="why-lbl">Años en Uber a nivel global</div>
+          </div>
+          <div class="why-stat">
+            <div class="why-num">4</div>
+            <div class="why-lbl">Continentes en proyectos entregados</div>
+          </div>
+          <div class="why-stat">
+            <div class="why-num" style="font-size:2rem;">Hoy</div>
+            <div class="why-lbl">Es el momento de empezar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ── CTA FINAL ─────────────────────────────────── -->
+  <section class="cta-sec">
+    <div class="cta-glow"></div>
+    <div class="wrap" style="position:relative;z-index:1;">
+      <div class="sec-label" style="justify-content:center;margin-bottom:1.5rem;">El siguiente paso</div>
+      <h2 class="cta-title">¿Listo para transformar<br>tu operación?</h2>
+      <p class="cta-sub">Habla con Omar. Cuéntale cómo funciona tu negocio y en qué puede hacer la diferencia la tecnología.</p>
+      <a href="https://wa.me/525539669841" target="_blank" rel="noopener" class="btn-wa">
+        <svg class="ico" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Hablar con Omar por WhatsApp
+      </a>
+      <p class="cta-note">Omar responde en minutos — sin compromiso.</p>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────── -->
+  <footer>
+    <div class="f-logo">Execution<em>AI</em></div>
+    <p>© 2025 ExecutionAI · México</p>
+  </footer>
+
+</body>
+</html>
