@@ -107,7 +107,7 @@
     /* ─── AI LAB STUDIOS wordmark ─────────────────── */
     .hero-studio-title {
       font-family: var(--ff-display);
-      font-size: clamp(1.75rem, 6vw, 4.2rem);
+      font-size: clamp(1.4rem, 5.5vw, 4.2rem);
       font-weight: 800;
       letter-spacing: .1em;
       text-transform: uppercase;
@@ -522,7 +522,9 @@
       .hero { padding: 110px 1.25rem 70px; }
       .cap-grid,
       .proj-grid  { grid-template-columns: 1fr; }
-      .hero-hud { padding: 1rem 1.25rem; }
+      .hero-hud { padding: .875rem .875rem; }
+      .hero-hud::before, .hero-hud::after,
+      .hero-hud-tr::before, .hero-hud-tr::after { border-color: rgba(0,217,255,.7); width: 14px; height: 14px; }
       .hero-stats { gap: 1.1rem; margin-top: 3rem; padding-top: 2rem; }
       .stat-num { font-size: 1.6rem; }
       .stat-lbl { font-size: .68rem; }
