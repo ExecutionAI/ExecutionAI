@@ -179,6 +179,7 @@
 
     /* ─── Hero ────────────────────────────────────── */
     .hero {
+      position: relative;
       min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
       text-align: center;
@@ -516,7 +517,7 @@
       .cap-grid,
       .proj-grid  { grid-template-columns: 1fr; }
       .studio-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-      .studio-stats-grid { grid-template-columns: 1fr 1fr; }
+      .studio-stats-grid { grid-template-columns: 1fr; }
       .hero-stats { flex-direction: column; gap: 1.5rem; }
       .vr { display: none; }
       footer { flex-direction: column; gap: .75rem; text-align: center; }
@@ -550,6 +551,10 @@
 
   <!-- ── HERO ──────────────────────────────────────── -->
   <section class="hero" aria-labelledby="hero-heading">
+    <!-- Animated background paths -->
+    <div aria-hidden="true" style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;">
+      <svg id="hero-paths-svg" width="100%" height="100%" viewBox="0 0 696 316" preserveAspectRatio="xMidYMid slice" fill="none"></svg>
+    </div>
     <div class="hero-glow" aria-hidden="true"></div>
     <div style="position:relative;z-index:1;">
 
@@ -812,5 +817,66 @@
     <p>© 2026 ExecutionAI · AI Lab Studios · México</p>
   </footer>
 
+<script>
+(function () {
+  var svg = document.getElementById('hero-paths-svg');
+  if (!svg) return;
+
+  function buildPaths(position) {
+    for (var i = 0; i < 36; i++) {
+      var px = 380 - i * 5 * position;
+      var py = 189 + i * 6;
+      var mx = 312 - i * 5 * position;
+      var cx = 152 - i * 5 * position;
+      var cy = 343 - i * 6;
+      var ex = 616 - i * 5 * position;
+      var ey = 470 - i * 6;
+      var fx = 684 - i * 5 * position;
+      var fy = 875 - i * 6;
+      var d = 'M-' + px + ' -' + py +
+              'C-' + px + ' -' + py + ' -' + mx + ' ' + (216 - i * 6) + ' ' + cx + ' ' + cy +
+              'C' + ex + ' ' + ey + ' ' + fx + ' ' + fy + ' ' + fx + ' ' + fy;
+
+      var strokeOpacity = Math.min(0.03 + i * 0.008, 0.22);
+      var strokeWidth   = 0.5 + i * 0.03;
+
+      var el = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      el.setAttribute('d', d);
+      el.setAttribute('stroke', 'rgba(0,217,255,1)');
+      el.setAttribute('stroke-width', strokeWidth);
+      el.setAttribute('stroke-opacity', strokeOpacity);
+      el.setAttribute('fill', 'none');
+      svg.appendChild(el);
+
+      (function (path, opacity) {
+        requestAnimationFrame(function () {
+          var len = path.getTotalLength();
+          var visible = len * 0.3;
+          path.style.strokeDasharray = visible + ' ' + (len - visible);
+          path.style.strokeDashoffset = '0';
+
+          var dur = (20 + Math.random() * 10) * 1000;
+          path.animate(
+            [
+              { strokeDashoffset: '0',            opacity: opacity * 0.5 },
+              { strokeDashoffset: -len + 'px',    opacity: opacity },
+              { strokeDashoffset: (-len * 2) + 'px', opacity: opacity * 0.5 },
+            ],
+            {
+              duration: dur,
+              iterations: Infinity,
+              easing: 'linear',
+              delay: -Math.random() * dur,
+            }
+          );
+        });
+      })(el, strokeOpacity);
+    }
+  }
+
+  buildPaths(1);
+  buildPaths(-1);
+})();
+</script>
 </body>
 </html>
